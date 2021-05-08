@@ -1,0 +1,45 @@
+class Solution {
+public:
+    
+ TreeNode* deleteNode(TreeNode* root, int key) {
+        if(root==NULL) return NULL;
+        //if key is greater than the root value
+        if(root->val < key){
+            root->right = deleteNode(root->right, key);
+        }
+        // if key is lesser than the root value
+        else if(root->val > key){
+            root->left = deleteNode(root->left, key);
+        }
+        // if key is equal to root value
+        else{
+            //3 cases
+            // No children
+            if(!root->left&&!root->right){
+                delete root;
+                root = NULL;
+            }
+            // 1 child in the (right)
+            else if(root->left==NULL){
+                TreeNode* temp = root;
+                root = root->right;
+                delete(temp);
+            }
+            // 1 child in the (left)
+            else if(root->right==NULL){
+                TreeNode* temp = root;
+                root=root->left;
+                delete temp;
+            }
+            //2 children
+            else{
+                TreeNode *temp = root->right; // find minimal value of right sub tree
+                while(temp->left!=NULL) temp=temp->left;
+                root->val = temp->val; // duplicate the node value
+                root->right = deleteNode(root->right, temp->val); // delete the duplicate node
+            }
+            
+        }
+        return root;
+    }
+};
