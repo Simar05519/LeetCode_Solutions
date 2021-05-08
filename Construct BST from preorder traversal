@@ -1,0 +1,16 @@
+class Solution {
+public:
+     TreeNode* construct(vector<int>& preorder ,int &i,int limit) {
+        if(i==preorder.size()|| preorder[i]>limit) return NULL;
+        TreeNode * root =new TreeNode(preorder[i]);
+        i++;
+        root->left =construct(preorder,i,preorder[i-1]);
+        root->right =construct(preorder,i,limit);
+        return root;
+    }
+  
+    TreeNode* bstFromPreorder(vector<int>& preorder) {
+        int i=0;
+       return construct(preorder,i,INT_MAX);
+    }
+};
