@@ -1,0 +1,33 @@
+class Solution{
+  public:
+    // The given root is the root of the Binary Tree
+    // Return the root of the generated BST
+    vector<int>v; // global vector
+    void inorder(Node* r) // function to get inorder of given tree
+    {
+        if(r==NULL) return;
+        inorder(r->left);
+        v.push_back(r->data);
+        inorder(r->right);
+    
+    }
+    
+    void helper(Node *ro,int&i) // function to change the values of given input tree
+    {
+        if(ro==NULL) return;
+        helper(ro->left,i);
+        ro->data=v[i++];
+        helper(ro->right,i);
+
+    }
+
+    Node *binaryTreeToBST (Node *root)
+    {    int i=0;
+         inorder(root);
+         sort(v.begin(),v.end());
+    
+         helper(root,i);
+         v.clear();
+         return root;
+    }
+};
