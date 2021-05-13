@@ -1,0 +1,22 @@
+class Solution{
+    public:
+    //Function to find if there exists a triplet in the 
+    //array A[] which sums up to X.
+    bool find3Numbers(int A[], int n, int X)
+{
+sort(A, A + n);
+for (int i = 0; i < n; i++) {
+int point = A[i];
+int j = i + 1, k = n - 1;
+while (j < k) {
+int a = point + A[j] + A[k];
+if (a == X)
+return true;
+if (a < X)
+j++;
+else
+k--;
+}
+}
+return false;
+    }
