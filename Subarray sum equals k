@@ -1,0 +1,39 @@
+class Solution {
+public:
+    
+    // We iterate over the array and keep calculating the cumulative sum
+    // We keep a map which tells us the number of times we have encountered a particular sum
+    // We update the map with the frequency of the 'sum' variable (+1)
+    // We check for the frequncy of "sum-k" for each particular sum, and add the freq of "sum-k" to ans.
+    
+    int subarraySum(vector<int>& nums, int k) {
+
+        int ans=0;
+        int sum=0;
+        unordered_map<int, int> m = {{0,1}}; // Sum 0 can be made 1 number of times.
+        
+        
+        for(int i=0;i<nums.size(); i++){
+            // Keep updating 'sum' variable which contains the cumulative sum
+            sum += nums[i];
+            
+            // If (sum-k) is present in the map, then it means that current_sum-k has already been found
+            // m[sum-k] times so add that to the answer
+            // (Difference between 'sum-k' and sum is 'k')
+            if(m.count(sum-k)){
+                ans += m[sum-k];
+            }
+            
+            // Update the map with the frequency of "sum" and increase it by 1.
+            // This whole code below can be written like: m[sum]++ only (it will automatically handle everything)
+            if(m.count(sum)){
+                m[sum]++;
+            }
+            else{
+                m[sum] = 1;
+            }
+        }
+        
+        return ans;
+    }
+};
