@@ -1,0 +1,58 @@
+class Solution {
+  public:
+    vector < int > v;
+
+  void left_bt(Node * root) {
+    if (root) {
+      if (root -> left) {
+        v.push_back(root -> data);
+        left_bt(root -> left);
+      } else if (root -> right) {
+        v.push_back(root -> data);
+        left_bt(root -> right);
+      }
+    }
+  }
+
+  void leaf(Node * root) {
+    if (root) {
+      if (!(root -> left) && !(root -> right)) {
+        v.push_back(root -> data);
+        return;
+      }
+      leaf(root -> left);
+      leaf(root -> right);
+
+    }
+  }
+
+  void right_bt(Node * root) {
+    if (root) {
+      if (root -> right) {
+        right_bt(root -> right);
+        v.push_back(root -> data);
+
+      } else if (root -> left) {
+        right_bt(root -> left);
+        v.push_back(root -> data);
+
+      }
+    }
+  }
+
+  vector < int > printBoundary(Node * root) {
+    vector < int > a;
+    if (root == NULL) return a;
+    if (root -> left == NULL) {
+      v.push_back(root -> data);
+      leaf(root);
+      right_bt(root -> right);
+    } else {
+      left_bt(root);
+      leaf(root);
+      right_bt(root -> right);
+    }
+    return v;
+
+  }
+};
