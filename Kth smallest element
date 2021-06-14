@@ -1,0 +1,43 @@
+void swap(int* a, int* b)
+{
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int partition(int arr[], int low, int high)
+{
+    int pivot = arr[low];
+    int i = low, j = high;
+ 
+    while (true) {
+ 
+        do {
+            i++;
+        } while (arr[i] < pivot);
+ 
+        do {
+            j--;
+        } while (arr[j] > pivot);
+ 
+        if (i >= j) {
+            swap(&arr[low],&arr[j]);
+            return j;
+        }
+ 
+        swap(&arr[i], &arr[j]);
+    }
+}
+
+int kthSmallest(int arr[], int l, int r, int k)
+    {
+        if (k > 0 && k <= r+1){
+        int pos = partition(arr, l, r+1);
+ 
+        if (pos  == k-1) return arr[pos];
+        if (pos > k-1) return kthSmallest(arr, l, pos, k);
+        return kthSmallest(arr, pos + 1, r, k);
+    }
+
+    return INT_MAX;
+    }
